@@ -19,9 +19,12 @@ import javax.swing.KeyStroke;
  * @author ekltl
  */
 @SuppressWarnings("serial")
-public class EmulatorFrame extends JFrame implements ActionListener {
+public class EmulatorFrame extends JFrame {
 	
 	private JMenuBar menuBar;
+	
+	private WorkspacePanel workspacePanel;
+	private ControlPanel controlPanel;
 	
 	/**
 	 * Construct a new EmulatorFrame with new workspace and control panels.
@@ -34,8 +37,10 @@ public class EmulatorFrame extends JFrame implements ActionListener {
 		this.setSize(1024, 768);
 		
 		// Add content panels
-		this.getContentPane().add(new WorkspacePanel(), BorderLayout.CENTER);
-		this.getContentPane().add(new ControlPanel(), BorderLayout.EAST);
+		this.workspacePanel = new WorkspacePanel();
+		this.controlPanel = new ControlPanel();
+		this.getContentPane().add(this.workspacePanel, BorderLayout.CENTER);
+		this.getContentPane().add(this.controlPanel, BorderLayout.EAST);
 		
 		// Build the menu
 		this.menuBar = new JMenuBar();
@@ -43,15 +48,20 @@ public class EmulatorFrame extends JFrame implements ActionListener {
 		this.menuBar.add(fileMenu);
 		JMenuItem quitItem = new JMenuItem("Quit");
 		quitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
-		quitItem.addActionListener(this);
+		quitItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Emulator.quit();
+			}
+		});
 		fileMenu.add(quitItem);
 		this.setJMenuBar(this.menuBar);
 	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		if(arg0.getActionCommand().equals("Quit")) {
-			Emulator.quit();
-		}
+	
+	/**
+	 * Notify the emulator UI of a change.
+	 */
+	public void addedCube(Cube c) {
+		this.workspacePanel.addedCube(c);
 	}
 }
