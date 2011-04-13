@@ -29,12 +29,22 @@ public class WorkspacePanel extends JPanel {
 	}
 
 	/**
-	 * Notify the workspace that a new cube was added.
-	 * @param c the Cube that was added.
+	 * Notify the workspace that a new Cube was added.
+	 * @param cube the Cube that was added.
 	 */
-	public void addedCube(Cube c) {
-		CubePanel p = new CubePanel(c);
-		this.add(p);
+	public void addedCube(Cube cube) {
+		CubePanel panel = new CubePanel(cube);
+		this.add(panel);
+		panel.collisionDetect();
+		this.repaint();
+	}
+	
+	/**
+	 * Notify the workspace that a Cube was removed.
+	 * @param cube the Cube that was removed.
+	 */
+	public void removedCube(Cube cube) {
+		this.remove(cube.getPanel());
 		this.repaint();
 	}
 	
@@ -44,11 +54,13 @@ public class WorkspacePanel extends JPanel {
 
 		@Override
 		public void mousePressed(MouseEvent event) {
-			for(Cube c : Emulator.getCubes()) {
-				CubePanel p = c.getPanel();
-				if(p.contains(SwingUtilities.convertPoint(WorkspacePanel.this, event.getPoint(), p))) {
-					this.draggingPanel = p;
-					this.anchorPoint = SwingUtilities.convertPoint(WorkspacePanel.this, event.getPoint(), p);
+			if(Emulator.getInteractionMode() == Emulator.InteractionMode.Normal) { 
+				for(Cube c : Emulator.getCubes()) {
+					CubePanel p = c.getPanel();
+					if(p.contains(SwingUtilities.convertPoint(WorkspacePanel.this, event.getPoint(), p))) {
+						this.draggingPanel = p;
+						this.anchorPoint = SwingUtilities.convertPoint(WorkspacePanel.this, event.getPoint(), p);
+					}
 				}
 			}
 		}
@@ -71,7 +83,18 @@ public class WorkspacePanel extends JPanel {
 		public void mouseMoved(MouseEvent e) {}
 
 		@Override
-		public void mouseClicked(MouseEvent e) {}
+		public void mouseClicked(MouseEvent event) {
+			if(Emulator.getInteractionMode() == Emulator.InteractionMode.Removing) {
+				for(Cube c : Emulator.getCubes()) {
+					CubePanel p = c.getPanel();
+					if(p.contains(SwingUtilities.convertPoint(WorkspacePanel.this, event.getPoint(), p))) {
+						Emulator.removeCube(c);
+						Emulator.setInteractionMode(Emulator.InteractionMode.Normal);
+						break;
+					}
+				}
+			}
+		}
 
 		@Override
 		public void mouseEntered(MouseEvent e) {}

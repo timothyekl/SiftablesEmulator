@@ -61,7 +61,11 @@ public class EmulatorFrame extends JFrame {
 	/**
 	 * Notify the emulator UI of a change.
 	 */
-	public void addedCube(Cube c) {
-		this.workspacePanel.addedCube(c);
+	public void addedCube(Cube cube) {
+		this.workspacePanel.addedCube(cube);
+	}
+
+	public void removedCube(Cube cube) {
+		this.workspacePanel.removedCube(cube);
 	}
 }

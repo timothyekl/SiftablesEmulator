@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class ControlPanel extends JPanel {
 	public ControlPanel() {
-super(new GridBagLayout());
+		super(new GridBagLayout());
 		
 		this.setBackground(new Color(192, 192, 255, 255));
 		
@@ -31,9 +31,10 @@ super(new GridBagLayout());
 		JButton addButton = new JButton("Add");
 		addButton.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent event) {
 				if(Emulator.getCubes().size() < 6) {
 					Emulator.addCube();
+					Emulator.setInteractionMode(Emulator.InteractionMode.Normal);
 				}
 			}
 		});
@@ -42,6 +43,12 @@ super(new GridBagLayout());
 		constraints.gridx = GridBagConstraints.RELATIVE;
 		
 		JButton removeButton = new JButton("Remove");
+		removeButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				Emulator.setInteractionMode(Emulator.InteractionMode.Removing);
+			}
+		});
 		this.add(removeButton, constraints);
 	}
 }

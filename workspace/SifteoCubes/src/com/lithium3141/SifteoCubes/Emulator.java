@@ -9,12 +9,20 @@ public class Emulator {
 	
 	private static Set<Cube> cubes;
 	
+	public static enum InteractionMode {
+		Normal,
+		Removing
+	};
+	
+	private static InteractionMode interactionMode;
+	
 	/**
 	 * @param args Command-line arguments. Ignored.
 	 */
 	public static void main(String[] args) {
 		// Instantiate cube variables
 		cubes = new HashSet<Cube>();
+		interactionMode = InteractionMode.Normal;
 		
 		// Create the JFrame
 		emulatorFrame = new EmulatorFrame();
@@ -25,9 +33,14 @@ public class Emulator {
 	 * Add a new cube to active emulation.
 	 */
 	public static void addCube() {
-		Cube c = new Cube();
-		cubes.add(c);
-		emulatorFrame.addedCube(c);
+		Cube cube = new Cube();
+		cubes.add(cube);
+		emulatorFrame.addedCube(cube);
+	}
+	
+	public static void removeCube(Cube cube) {
+		cubes.remove(cube);
+		emulatorFrame.removedCube(cube);
 	}
 	
 	/**
@@ -42,6 +55,14 @@ public class Emulator {
 	 */
 	public static void quit() {
 		System.exit(0);
+	}
+
+	public static void setInteractionMode(InteractionMode interactionMode) {
+		Emulator.interactionMode = interactionMode;
+	}
+
+	public static InteractionMode getInteractionMode() {
+		return interactionMode;
 	}
 
 }

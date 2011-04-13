@@ -58,17 +58,17 @@ public class CubePanel extends JPanel {
 				Rectangle intersection = this.getBounds().intersection(p.getBounds());
 				if(intersection.width < intersection.height) {
 					// Move in the x direction
-					if(this.getX() < p.getX()) {
-						p.setLocation(p.getX() + (intersection.width), p.getY());
-					} else {
+					if(this.getX() > p.getX()) {
 						p.setLocation(p.getX() - (intersection.width), p.getY());
+					} else {
+						p.setLocation(p.getX() + (intersection.width), p.getY());
 					}
 				} else {
 					// Move in the y direction
-					if(this.getY() < p.getY()) {
-						p.setLocation(p.getX(), p.getY() + (intersection.height));
-					} else {
+					if(this.getY() > p.getY()) {
 						p.setLocation(p.getX(), p.getY() - (intersection.height));
+					} else {
+						p.setLocation(p.getX(), p.getY() + (intersection.height));
 					}
 				}
 			}
