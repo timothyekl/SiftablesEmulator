@@ -20,8 +20,7 @@ public class ControlPanel extends JPanel {
 	public ControlPanel() {
 super(new GridBagLayout());
 		
-		// TODO debugging; remove
-		this.setBackground(Color.BLUE);
+		this.setBackground(new Color(192, 192, 255, 255));
 		
 		// Add/remove cube buttons
 		GridBagConstraints constraints = new GridBagConstraints();

@@ -1,6 +1,5 @@
 package com.lithium3141.SifteoCubes;
 
-import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -21,8 +20,6 @@ public class WorkspacePanel extends JPanel {
 	public WorkspacePanel() {
 		super();
 		
-		// TODO debugging; remove
-		this.setBackground(Color.GREEN);
 		this.setLayout(null);
 		
 		// Listen for mouse motion
@@ -47,15 +44,11 @@ public class WorkspacePanel extends JPanel {
 
 		@Override
 		public void mousePressed(MouseEvent event) {
-			System.out.println("Mouse pressed at point: " + event.getPoint());
-			
 			for(Cube c : Emulator.getCubes()) {
 				CubePanel p = c.getPanel();
 				if(p.contains(SwingUtilities.convertPoint(WorkspacePanel.this, event.getPoint(), p))) {
-					System.out.println("\tFound dragging panel: " + p);
 					this.draggingPanel = p;
 					this.anchorPoint = SwingUtilities.convertPoint(WorkspacePanel.this, event.getPoint(), p);
-					System.out.println("\tUsing anchor point: " + this.anchorPoint);
 				}
 			}
 		}
@@ -68,9 +61,7 @@ public class WorkspacePanel extends JPanel {
 
 		@Override
 		public void mouseDragged(MouseEvent event) {
-			System.out.println("Mouse dragged at point: (" + event.getX() + "," + event.getY() + ")");
 			if(this.draggingPanel != null) {
-				System.out.println("\tDragging panel: " + this.draggingPanel);
 				this.draggingPanel.setLocation(event.getX() - this.anchorPoint.x, event.getY() - this.anchorPoint.y);
 				WorkspacePanel.this.repaint();
 			}
