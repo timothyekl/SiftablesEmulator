@@ -33,7 +33,9 @@ super(new GridBagLayout());
 		addButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Emulator.addCube();
+				if(Emulator.getCubes().size() < 6) {
+					Emulator.addCube();
+				}
 			}
 		});
 		this.add(addButton, constraints);

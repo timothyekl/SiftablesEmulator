@@ -5,8 +5,6 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -19,7 +17,6 @@ import javax.swing.SwingUtilities;
  */
 @SuppressWarnings("serial")
 public class WorkspacePanel extends JPanel {
-	private Map<Cube, CubePanel> cubePanelMap;
 	
 	public WorkspacePanel() {
 		super();
@@ -27,9 +24,6 @@ public class WorkspacePanel extends JPanel {
 		// TODO debugging; remove
 		this.setBackground(Color.GREEN);
 		this.setLayout(null);
-		
-		// Instantiate tracking variables
-		this.cubePanelMap = new HashMap<Cube, CubePanel>();
 		
 		// Listen for mouse motion
 		WorkspacePanelMouseListener l = new WorkspacePanelMouseListener();
@@ -43,7 +37,6 @@ public class WorkspacePanel extends JPanel {
 	 */
 	public void addedCube(Cube c) {
 		CubePanel p = new CubePanel(c);
-		this.cubePanelMap.put(c, p);
 		this.add(p);
 		this.repaint();
 	}
@@ -56,7 +49,8 @@ public class WorkspacePanel extends JPanel {
 		public void mousePressed(MouseEvent event) {
 			System.out.println("Mouse pressed at point: " + event.getPoint());
 			
-			for(CubePanel p : cubePanelMap.values()) {
+			for(Cube c : Emulator.getCubes()) {
+				CubePanel p = c.getPanel();
 				if(p.contains(SwingUtilities.convertPoint(WorkspacePanel.this, event.getPoint(), p))) {
 					System.out.println("\tFound dragging panel: " + p);
 					this.draggingPanel = p;
