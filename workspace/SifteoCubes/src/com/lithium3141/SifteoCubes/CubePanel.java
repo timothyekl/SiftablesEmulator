@@ -13,7 +13,7 @@ public class CubePanel extends JPanel {
 	public CubePanel(Cube c) {
 		super();
 		
-		this.setColor(Color.RED);
+		this.setBackground(Color.RED);
 		this.setSize(160, 160);
 		
 		this.cube = c;
