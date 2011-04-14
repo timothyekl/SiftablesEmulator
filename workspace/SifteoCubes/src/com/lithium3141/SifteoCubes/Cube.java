@@ -50,9 +50,11 @@ public class Cube {
 	
 	public void rotateClockwise() {
 		this.rotation = (this.rotation + 1) % 4;
+		this.needsRefresh();
 	}
 	public void rotateCounterclockwise() {
 		this.rotation = (this.rotation - 1 + 4) % 4;
+		this.needsRefresh();
 	}
 	
 	/**

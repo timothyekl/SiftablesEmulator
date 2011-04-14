@@ -6,6 +6,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.geom.AffineTransform;
 
 import javax.swing.JPanel;
 
@@ -27,6 +30,52 @@ public class CubePanel extends JPanel {
 		
 		this.displayPanel.setLocation(32, 32);
 		this.add(this.displayPanel);
+		
+		JPanel rotateCCWPanel = new JPanel();
+		rotateCCWPanel.setSize(16, 16);
+		rotateCCWPanel.setLocation(16, 16);
+		rotateCCWPanel.setBackground(Color.BLUE);
+		rotateCCWPanel.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				CubePanel.this.getCube().rotateCounterclockwise();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {}
+			@Override
+			public void mouseExited(MouseEvent arg0) {}
+			@Override
+			public void mousePressed(MouseEvent arg0) {}
+			@Override
+			public void mouseReleased(MouseEvent arg0) {}
+			
+		});
+		this.add(rotateCCWPanel);
+		
+		JPanel rotateCWPanel = new JPanel();
+		rotateCWPanel.setSize(16, 16);
+		rotateCWPanel.setLocation(160, 16);
+		rotateCWPanel.setBackground(Color.BLUE);
+		rotateCWPanel.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				CubePanel.this.getCube().rotateClockwise();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {}
+			@Override
+			public void mouseExited(MouseEvent arg0) {}
+			@Override
+			public void mousePressed(MouseEvent arg0) {}
+			@Override
+			public void mouseReleased(MouseEvent arg0) {}
+			
+		});
+		this.add(rotateCWPanel);
 	}
 	
 	@Override
@@ -163,9 +212,28 @@ public class CubePanel extends JPanel {
 		@Override
 		public void paint(Graphics g) {
 			super.paint(g);
-			Emulator.getActiveGame().renderCube(CubePanel.this.cube, g);
+			
+			System.out.println("Rendering display with rotation " + CubePanel.this.getCube().getRotationDegrees());
 			Graphics2D g2 = (Graphics2D)g;
-			g2.rotate(CubePanel.this.getCube().getRotationDegrees());
+			
+			int xt = 0;
+			int yt = 0;
+			switch(CubePanel.this.getCube().getRotation()) {
+			case Cube.ROTATION_90: xt = 0; yt = -128; break;
+			case Cube.ROTATION_180: xt = -128; yt = -128; break;
+			case Cube.ROTATION_270: xt = -128; yt = 0; break;
+			case Cube.ROTATION_0: // fall through
+			default:
+				xt = 0; yt = 0; break;
+			}
+			
+			AffineTransform savedTransform = g2.getTransform();
+			g2.rotate(Math.toRadians(CubePanel.this.getCube().getRotationDegrees()));
+			g2.translate(xt, yt);
+			
+			Emulator.getActiveGame().renderCube(CubePanel.this.cube, g2);
+			
+			g2.setTransform(savedTransform);
 		}
 	}
 }

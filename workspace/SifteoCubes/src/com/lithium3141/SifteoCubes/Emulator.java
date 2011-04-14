@@ -47,6 +47,7 @@ public class Emulator {
 	public static void load() {
 		registerGame(new NullGame());
 		registerGame(new RGBStripeGame());
+		registerGame(new ColorBlockGame());
 	}
 	
 	/**
