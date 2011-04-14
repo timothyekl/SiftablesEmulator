@@ -48,6 +48,14 @@ public class CubePanel extends JPanel {
 	}
 	
 	/**
+	 * Call to indicate to the emulator framework that this cube's display panel
+	 * needs to be repainted.
+	 */
+	public void needsRefresh() {
+		this.displayPanel.repaint();
+	}
+	
+	/**
 	 * Perform collision detection against all other active cubes. Move them if
 	 * a collision is found.
 	 */
@@ -75,11 +83,63 @@ public class CubePanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Perform adjacency checking against all other active cubes. Send the
+	 * appropriate notifications if adjacencies are made or broken.
+	 */
+	public void updateAdjacencies() {
+		int OFFSET_FUZZ = 20;
+		int DISTANCE_FUZZ = 30;
+		
+		Cube cube = this.getCube();
+		for(Cube otherCube : Emulator.getCubes()) {
+			if(otherCube != cube) {
+				CubePanel panel = this;
+				CubePanel otherPanel = otherCube.getPanel();
+				
+				// Check vertical alignment
+				if(Math.abs(panel.getX() - otherPanel.getX()) < OFFSET_FUZZ && Math.abs(panel.getY() - otherPanel.getY()) < panel.getHeight() + DISTANCE_FUZZ) {
+					// Aligned vertically
+					System.out.println("Vertical alignment");
+					
+					if(panel.getY() < otherPanel.getY()) {
+						// This panel is above the other panel
+						Emulator.foundAdjacent(cube, cube.absoluteEdgeForRelative(Cube.EDGE_BOTTOM), otherCube, otherCube.absoluteEdgeForRelative(Cube.EDGE_TOP));
+					} else {
+						// This panel is below the other panel
+						Emulator.foundAdjacent(cube, cube.absoluteEdgeForRelative(Cube.EDGE_TOP), otherCube, otherCube.absoluteEdgeForRelative(Cube.EDGE_BOTTOM));
+					}
+				} else {
+					// Not aligned vertically
+					
+				}
+				
+				// Check horizontal alignment
+				if(Math.abs(panel.getY() - otherPanel.getY()) < OFFSET_FUZZ && Math.abs(panel.getX() - otherPanel.getX()) < panel.getWidth() + DISTANCE_FUZZ) {
+					// Aligned horizontally
+					System.out.println("Horizontal alignment");
+					
+					if(panel.getX() < otherPanel.getX()) {
+						// This panel is above the other panel
+						Emulator.foundAdjacent(cube, cube.absoluteEdgeForRelative(Cube.EDGE_RIGHT), otherCube, otherCube.absoluteEdgeForRelative(Cube.EDGE_LEFT));
+					} else {
+						// This panel is below the other panel
+						Emulator.foundAdjacent(cube, cube.absoluteEdgeForRelative(Cube.EDGE_LEFT), otherCube, otherCube.absoluteEdgeForRelative(Cube.EDGE_RIGHT));
+					}
+				} else {
+					// Not aligned horizontally
+					
+				}
+			}
+		}
+	}
+	
 	@Override
 	public void setLocation(int x, int y) {
 		super.setLocation(x, y);
 		
 		this.collisionDetect();
+		this.updateAdjacencies();
 	}
 	
 	@Override
@@ -87,6 +147,7 @@ public class CubePanel extends JPanel {
 		super.setLocation(p);
 		
 		this.collisionDetect();
+		this.updateAdjacencies();
 	}
 	
 	private class CubeDisplayPanel extends JPanel {
@@ -96,7 +157,15 @@ public class CubePanel extends JPanel {
 			this.setLayout(null);
 			this.setSize(128, 128);
 			
-			this.setBackground(Color.RED);
+			this.setBackground(Color.WHITE);
+		}
+		
+		@Override
+		public void paint(Graphics g) {
+			super.paint(g);
+			Emulator.getActiveGame().renderCube(CubePanel.this.cube, g);
+			Graphics2D g2 = (Graphics2D)g;
+			g2.rotate(CubePanel.this.getCube().getRotationDegrees());
 		}
 	}
 }

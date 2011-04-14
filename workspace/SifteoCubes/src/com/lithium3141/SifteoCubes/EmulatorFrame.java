@@ -11,6 +11,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
+import com.lithium3141.SifteoCubes.Games.Game;
+
 /**
  * Main JFrame for the Sifteo Cubes emulator. Handles display of both the active
  * workspace and the cubes controller. Automatically sets up the panels needed
@@ -59,13 +61,34 @@ public class EmulatorFrame extends JFrame {
 	}
 	
 	/**
-	 * Notify the emulator UI of a change.
+	 * Notify the emulator UI of a new cube.
+	 * @param cube the new Cube
 	 */
 	public void addedCube(Cube cube) {
 		this.workspacePanel.addedCube(cube);
 	}
 
+	/**
+	 * Notify the emulator UI that a cube went away.
+	 * @param cube the Cube that was removed
+	 */
 	public void removedCube(Cube cube) {
 		this.workspacePanel.removedCube(cube);
+	}
+
+	/**
+	 * Notify the emulator UI of a new game.
+	 * @param game the new Game
+	 */
+	public void registeredGame(Game game) {
+		this.controlPanel.registeredGame(game);
+	}
+
+	/**
+	 * Notify the emulator UI that a game went away.
+	 * @param game the Game that was removed
+	 */
+	public void unregisteredGame(Game game) {
+		this.controlPanel.unregisteredGame(game);
 	}
 }
