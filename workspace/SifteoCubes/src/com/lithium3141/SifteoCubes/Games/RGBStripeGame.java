@@ -5,7 +5,7 @@ import java.awt.Graphics;
 
 import com.lithium3141.SifteoCubes.Cube;
 
-public class RGBStripeGame extends Game {
+public class RGBStripeGame implements Game {
 
 	@Override
 	public int getRequiredCubes() {
@@ -19,7 +19,6 @@ public class RGBStripeGame extends Game {
 
 	@Override
 	public void load() {}
-
 	@Override
 	public void unload() {}
 
@@ -40,20 +39,11 @@ public class RGBStripeGame extends Game {
 
 	@Override
 	public void cubesJoined(Cube c1, int e1, Cube c2, int e2) {}
-
 	@Override
 	public void cubesSeparated(Cube c1, int e1, Cube c2, int e2) {}
-
 	@Override
-	public void addedCube(Cube cube) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	public void addedCube(Cube cube) {}
 	@Override
-	public void removedCube(Cube cube) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void removedCube(Cube cube) {}
 
 }

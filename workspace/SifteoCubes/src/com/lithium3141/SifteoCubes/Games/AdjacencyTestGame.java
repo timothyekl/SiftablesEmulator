@@ -8,7 +8,7 @@ import java.util.Map;
 import com.lithium3141.SifteoCubes.Cube;
 import com.lithium3141.SifteoCubes.Emulator;
 
-public class AdjacencyTestGame extends Game {
+public class AdjacencyTestGame implements Game {
 	
 	Map<Cube,Integer> cubeIDs;
 	int newID;
@@ -51,7 +51,7 @@ public class AdjacencyTestGame extends Game {
 		}
 		
 		g.setColor(Color.BLACK);
-		drawCenteredString("" + this.cubeIDs.get(cube), 128, 128, g);
+		DrawingUtils.drawCenteredString("" + this.cubeIDs.get(cube), 128, 128, g);
 		
 		g.setColor(new Color(255, 165, 0, 255));
 		

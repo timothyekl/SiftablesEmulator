@@ -5,7 +5,7 @@ import java.awt.Graphics;
 
 import com.lithium3141.SifteoCubes.Cube;
 
-public class ColorBlockGame extends Game {
+public class ColorBlockGame implements Game {
 
 	@Override
 	public int getRequiredCubes() {

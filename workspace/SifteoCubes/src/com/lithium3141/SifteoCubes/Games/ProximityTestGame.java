@@ -10,7 +10,7 @@ import java.util.Map;
 import com.lithium3141.SifteoCubes.Cube;
 import com.lithium3141.SifteoCubes.Emulator;
 
-public class ProximityTestGame extends Game {
+public class ProximityTestGame implements Game {
 	
 	private Map<Cube, List<Cube>> proximityMap;
 

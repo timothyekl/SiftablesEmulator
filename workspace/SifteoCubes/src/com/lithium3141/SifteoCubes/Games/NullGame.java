@@ -8,7 +8,7 @@ import java.awt.Graphics2D;
 
 import com.lithium3141.SifteoCubes.Cube;
 
-public class NullGame extends Game {
+public class NullGame implements Game {
 	@Override
 	public int getRequiredCubes() {
 		return 0;
@@ -32,7 +32,7 @@ public class NullGame extends Game {
 		g2.setColor(Color.BLACK);
 		Dimension d = new Dimension(128, 128);
 		g2.setFont(new Font("Courier", Font.BOLD, 12));
-		drawCenteredString("SELECT GAME", d.width, d.height, g);
+		DrawingUtils.drawCenteredString("SELECT GAME", d.width, d.height, g);
 	}
 
 	@Override
