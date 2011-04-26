@@ -141,4 +141,9 @@ public class Cube {
 		assert(this.adjacent[edge] == cube);
 		this.adjacent[edge] = null;
 	}
+	
+	@Override
+	public String toString() {
+		return Integer.toHexString(System.identityHashCode(this));
+	}
 }

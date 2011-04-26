@@ -62,7 +62,7 @@ public class EmulatorFrame extends JFrame {
 		JMenu debugMenu = new JMenu("Debug");
 		this.menuBar.add(debugMenu);
 		JMenuItem adjacencyItem = new JMenuItem("Print adjacencies");
-		adjacencyItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, ActionEvent.CTRL_MASK | ActionEvent.SHIFT_MASK));
+		adjacencyItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.CTRL_MASK | ActionEvent.SHIFT_MASK));
 		adjacencyItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
