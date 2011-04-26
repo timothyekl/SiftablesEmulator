@@ -44,4 +44,16 @@ public class RGBStripeGame extends Game {
 	@Override
 	public void cubesSeparated(Cube c1, int e1, Cube c2, int e2) {}
 
+	@Override
+	public void addedCube(Cube cube) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removedCube(Cube cube) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

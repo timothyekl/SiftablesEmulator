@@ -1,5 +1,6 @@
 package com.lithium3141.SifteoCubes.Games;
 
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 
 import com.lithium3141.SifteoCubes.Cube;
@@ -39,4 +40,31 @@ public abstract class Game {
 	 * @param e2 The edge of the second Cube separated
 	 */
 	public abstract void cubesSeparated(Cube c1, int e1, Cube c2, int e2);
+	
+	/**
+	 * Add a new Cube to the game.
+	 * @param cube the Cube to add
+	 */
+	public abstract void addedCube(Cube cube);
+	
+	/**
+	 * Remove a Cube from the game.
+	 * @param cube the Cube to remove
+	 */
+	public abstract void removedCube(Cube cube);
+	
+
+	/**
+	 * Draw a string of text centered in the given Graphics object.
+	 * @param s the String to draw
+	 * @param w the width of the Graphics available
+	 * @param h the height of the Graphics available
+	 * @param g the Graphics object on which to draw
+	 */
+	public void drawCenteredString(String s, int w, int h, Graphics g) {
+	    FontMetrics fm = g.getFontMetrics();
+	    int x = (w - fm.stringWidth(s)) / 2;
+	    int y = (fm.getAscent() + (h - (fm.getAscent() + fm.getDescent())) / 2);
+	    g.drawString(s, x, y);
+	}
 }

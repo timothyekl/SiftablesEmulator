@@ -48,6 +48,8 @@ public class Emulator {
 		registerGame(new NullGame());
 		registerGame(new RGBStripeGame());
 		registerGame(new ColorBlockGame());
+		registerGame(new AdjacencyTestGame());
+		registerGame(new ProximityTestGame());
 	}
 	
 	/**
@@ -56,11 +58,17 @@ public class Emulator {
 	public static void addCube() {
 		Cube cube = new Cube();
 		cubes.add(cube);
+		if(activeGame != null) {
+			activeGame.addedCube(cube);
+		}
 		emulatorFrame.addedCube(cube);
 	}
 	
 	public static void removeCube(Cube cube) {
 		cubes.remove(cube);
+		if(activeGame != null) {
+			activeGame.removedCube(cube);
+		}
 		emulatorFrame.removedCube(cube);
 	}
 	
@@ -126,29 +134,37 @@ public class Emulator {
 	}
 	
 	public static void foundAdjacent(Cube c1, int e1, Cube c2, int e2) {
-		System.out.println("Found adjacent: " + c1 + " to " + c2);
-		if(activeGame != null && c1.adjacencyAlong(e1) == null && c2.adjacencyAlong(e2) == null) {
-			activeGame.cubesJoined(c1, e1, c2, e2);
-		}
-		if(c1.adjacencyAlong(e1) == null) {
+		//System.out.println("Found adjacent: " + formatCubeEdge(c1, e1) + " to " + formatCubeEdge(c2, e2));
+		if(c1.adjacencyAlong(e1) == null && c2.adjacencyAlong(e2) == null) {
+			if(activeGame != null) {
+				activeGame.cubesJoined(c1, e1, c2, e2);
+			}
 			c1.joinedCube(c2, e1);
-		}
-		if(c2.adjacencyAlong(e2) == null) {
-			c2.joinedCube(c1, e2);			
+			c2.joinedCube(c1, e2);
 		}
 	}
 	
 	public static void foundSeparate(Cube c1, int e1, Cube c2, int e2) {
-		System.out.println("Found separate: " + c1 + " to " + c2);
-		if(activeGame != null && c1.adjacencyAlong(e1).equals(c2) && c2.adjacencyAlong(e2).equals(c1)) {
-			activeGame.cubesSeparated(c1, e1, c2, e2);
-		}
-		if(c1.adjacencyAlong(e1) != null && c1.adjacencyAlong(e1).equals(c2)) {
+		//System.out.println("Found separate: " + formatCubeEdge(c1, e1) + " to " + formatCubeEdge(c2, e2));
+		if(c1.adjacencyAlong(e1) == c2 && c2.adjacencyAlong(e2) == c1) {
+			if (activeGame != null) {
+				activeGame.cubesSeparated(c1, e1, c2, e2);
+			}
 			c1.separatedCube(c2, e1);
+			c2.separatedCube(c1, e2);
 		}
-		if(c2.adjacencyAlong(e2) != null && c2.adjacencyAlong(e2).equals(c1)) {
-			c2.separatedCube(c1, e2);			
+	}
+	
+	public static String formatCubeEdge(Cube c, int e) {
+		String eString = null;
+		switch(e) {
+		case Cube.EDGE_NORTH: eString = "North"; break;
+		case Cube.EDGE_EAST: eString = "East"; break;
+		case Cube.EDGE_WEST: eString = "West"; break;
+		case Cube.EDGE_SOUTH: eString = "South"; break;
+		default: eString = "Unknown"; break;
 		}
+		return c.toString() + " " + eString;
 	}
 
 }

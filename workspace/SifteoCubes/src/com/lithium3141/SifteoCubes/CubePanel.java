@@ -149,35 +149,37 @@ public class CubePanel extends JPanel {
 				// Check vertical alignment
 				if(Math.abs(panel.getX() - otherPanel.getX()) < OFFSET_FUZZ && Math.abs(panel.getY() - otherPanel.getY()) < panel.getHeight() + DISTANCE_FUZZ) {
 					// Aligned vertically
-					System.out.println("Vertical alignment");
-					
 					if(panel.getY() < otherPanel.getY()) {
 						// This panel is above the other panel
 						Emulator.foundAdjacent(cube, cube.absoluteEdgeForRelative(Cube.EDGE_BOTTOM), otherCube, otherCube.absoluteEdgeForRelative(Cube.EDGE_TOP));
+						Emulator.foundSeparate(cube, cube.absoluteEdgeForRelative(Cube.EDGE_TOP), otherCube, otherCube.absoluteEdgeForRelative(Cube.EDGE_BOTTOM));
 					} else {
 						// This panel is below the other panel
 						Emulator.foundAdjacent(cube, cube.absoluteEdgeForRelative(Cube.EDGE_TOP), otherCube, otherCube.absoluteEdgeForRelative(Cube.EDGE_BOTTOM));
+						Emulator.foundSeparate(cube, cube.absoluteEdgeForRelative(Cube.EDGE_BOTTOM), otherCube, otherCube.absoluteEdgeForRelative(Cube.EDGE_TOP));
 					}
 				} else {
 					// Not aligned vertically
-					
+					Emulator.foundSeparate(cube, cube.absoluteEdgeForRelative(Cube.EDGE_TOP), otherCube, Cube.EDGE_BOTTOM);
+					Emulator.foundSeparate(cube, cube.absoluteEdgeForRelative(Cube.EDGE_BOTTOM), otherCube, Cube.EDGE_TOP);
 				}
 				
 				// Check horizontal alignment
 				if(Math.abs(panel.getY() - otherPanel.getY()) < OFFSET_FUZZ && Math.abs(panel.getX() - otherPanel.getX()) < panel.getWidth() + DISTANCE_FUZZ) {
 					// Aligned horizontally
-					System.out.println("Horizontal alignment");
-					
 					if(panel.getX() < otherPanel.getX()) {
 						// This panel is above the other panel
-						Emulator.foundAdjacent(cube, cube.absoluteEdgeForRelative(Cube.EDGE_RIGHT), otherCube, otherCube.absoluteEdgeForRelative(Cube.EDGE_LEFT));
+						Emulator.foundAdjacent(cube, cube.absoluteEdgeForRelative(Cube.EDGE_LEFT), otherCube, otherCube.absoluteEdgeForRelative(Cube.EDGE_RIGHT));
+						Emulator.foundSeparate(cube, cube.absoluteEdgeForRelative(Cube.EDGE_RIGHT), otherCube, otherCube.absoluteEdgeForRelative(Cube.EDGE_LEFT));
 					} else {
 						// This panel is below the other panel
-						Emulator.foundAdjacent(cube, cube.absoluteEdgeForRelative(Cube.EDGE_LEFT), otherCube, otherCube.absoluteEdgeForRelative(Cube.EDGE_RIGHT));
+						Emulator.foundAdjacent(cube, cube.absoluteEdgeForRelative(Cube.EDGE_RIGHT), otherCube, otherCube.absoluteEdgeForRelative(Cube.EDGE_LEFT));
+						Emulator.foundSeparate(cube, cube.absoluteEdgeForRelative(Cube.EDGE_LEFT), otherCube, otherCube.absoluteEdgeForRelative(Cube.EDGE_RIGHT));
 					}
 				} else {
 					// Not aligned horizontally
-					
+					Emulator.foundSeparate(cube, cube.absoluteEdgeForRelative(Cube.EDGE_LEFT), otherCube, Cube.EDGE_RIGHT);
+					Emulator.foundSeparate(cube, cube.absoluteEdgeForRelative(Cube.EDGE_RIGHT), otherCube, Cube.EDGE_LEFT);
 				}
 			}
 		}
@@ -212,8 +214,6 @@ public class CubePanel extends JPanel {
 		@Override
 		public void paint(Graphics g) {
 			super.paint(g);
-			
-			System.out.println("Rendering display with rotation " + CubePanel.this.getCube().getRotationDegrees());
 			Graphics2D g2 = (Graphics2D)g;
 			
 			int xt = 0;

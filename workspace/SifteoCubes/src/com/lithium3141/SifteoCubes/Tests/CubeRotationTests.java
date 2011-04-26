@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import com.lithium3141.SifteoCubes.Cube;
 
-public class CubeTests {
+public class CubeRotationTests {
 	@Test
 	public void testRotationProperty() {
 		Cube target = new Cube();

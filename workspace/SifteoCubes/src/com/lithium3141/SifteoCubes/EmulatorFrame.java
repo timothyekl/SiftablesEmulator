@@ -46,6 +46,7 @@ public class EmulatorFrame extends JFrame {
 		
 		// Build the menu
 		this.menuBar = new JMenuBar();
+		
 		JMenu fileMenu = new JMenu("File");
 		this.menuBar.add(fileMenu);
 		JMenuItem quitItem = new JMenuItem("Quit");
@@ -57,6 +58,25 @@ public class EmulatorFrame extends JFrame {
 			}
 		});
 		fileMenu.add(quitItem);
+		
+		JMenu debugMenu = new JMenu("Debug");
+		this.menuBar.add(debugMenu);
+		JMenuItem adjacencyItem = new JMenuItem("Print adjacencies");
+		adjacencyItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, ActionEvent.CTRL_MASK | ActionEvent.SHIFT_MASK));
+		adjacencyItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("=== ADJACENCIES ===");
+				for(Cube cube : Emulator.getCubes()) {
+					for(int i = 0; i < 4; i++) {
+						System.out.println(Emulator.formatCubeEdge(cube, i) + ": " + cube.adjacencyAlong(i));
+					}
+				}
+				System.out.println("=== ADJACENCIES ===");
+			}
+		});
+		debugMenu.add(adjacencyItem);
+		
 		this.setJMenuBar(this.menuBar);
 	}
 	

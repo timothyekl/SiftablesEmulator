@@ -3,7 +3,6 @@ package com.lithium3141.SifteoCubes.Games;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
@@ -35,17 +34,16 @@ public class NullGame extends Game {
 		g2.setFont(new Font("Courier", Font.BOLD, 12));
 		drawCenteredString("SELECT GAME", d.width, d.height, g);
 	}
-	
-	public void drawCenteredString(String s, int w, int h, Graphics g) {
-	    FontMetrics fm = g.getFontMetrics();
-	    int x = (w - fm.stringWidth(s)) / 2;
-	    int y = (fm.getAscent() + (h - (fm.getAscent() + fm.getDescent())) / 2);
-	    g.drawString(s, x, y);
-	}
 
 	@Override
 	public void cubesJoined(Cube c1, int e1, Cube c2, int e2) {}
 
 	@Override
 	public void cubesSeparated(Cube c1, int e1, Cube c2, int e2) {}
+
+	@Override
+	public void addedCube(Cube cube) {}
+
+	@Override
+	public void removedCube(Cube cube) {}
 }

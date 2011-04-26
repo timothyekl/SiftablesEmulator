@@ -35,7 +35,9 @@ public class Cube {
 	 * the current graphics. (Usually called from within a Game subclass.)
 	 */
 	public void needsRefresh() {
-		this.panel.needsRefresh();
+		if(this.panel != null) {
+			this.panel.needsRefresh();
+		}
 	}
 	
 	public int getRotation() {
@@ -50,10 +52,38 @@ public class Cube {
 	
 	public void rotateClockwise() {
 		this.rotation = (this.rotation + 1) % 4;
+		
+		Cube tmp = this.adjacent[EDGE_NORTH];
+		this.adjacent[EDGE_NORTH] = this.adjacent[EDGE_EAST];
+		this.adjacent[EDGE_EAST] = this.adjacent[EDGE_SOUTH];
+		this.adjacent[EDGE_SOUTH] = this.adjacent[EDGE_WEST];
+		this.adjacent[EDGE_WEST] = tmp;
+		
+		for(int i = 0; i < 4; i++) {
+			if(this.adjacent[i] != null) {
+				this.adjacent[i].getPanel().updateAdjacencies();
+			}
+		}
+		
+		//this.getPanel().updateAdjacencies();
 		this.needsRefresh();
 	}
 	public void rotateCounterclockwise() {
 		this.rotation = (this.rotation - 1 + 4) % 4;
+		
+		Cube tmp = this.adjacent[EDGE_NORTH];
+		this.adjacent[EDGE_NORTH] = this.adjacent[EDGE_WEST];
+		this.adjacent[EDGE_WEST] = this.adjacent[EDGE_SOUTH];
+		this.adjacent[EDGE_SOUTH] = this.adjacent[EDGE_EAST];
+		this.adjacent[EDGE_EAST] = tmp;
+		
+		for(int i = 0; i < 4; i++) {
+			if(this.adjacent[i] != null) {
+				this.adjacent[i].getPanel().updateAdjacencies();
+			}
+		}
+		
+		//this.getPanel().updateAdjacencies();
 		this.needsRefresh();
 	}
 	
@@ -108,7 +138,7 @@ public class Cube {
 	 * absolute edge.
 	 */
 	public void separatedCube(Cube cube, int edge) {
-		assert(this.adjacent[edge] == cube || this.adjacent[edge] == null);
+		assert(this.adjacent[edge] == cube);
 		this.adjacent[edge] = null;
 	}
 }
