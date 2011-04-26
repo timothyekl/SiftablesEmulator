@@ -136,22 +136,22 @@ public class Emulator {
 	public static void foundAdjacent(Cube c1, int e1, Cube c2, int e2) {
 		//System.out.println("Found adjacent: " + formatCubeEdge(c1, e1) + " to " + formatCubeEdge(c2, e2));
 		if(c1.adjacencyAlong(e1) == null && c2.adjacencyAlong(e2) == null) {
+			c1.joinedCube(c2, e1);
+			c2.joinedCube(c1, e2);
 			if(activeGame != null) {
 				activeGame.cubesJoined(c1, e1, c2, e2);
 			}
-			c1.joinedCube(c2, e1);
-			c2.joinedCube(c1, e2);
 		}
 	}
 	
 	public static void foundSeparate(Cube c1, int e1, Cube c2, int e2) {
 		//System.out.println("Found separate: " + formatCubeEdge(c1, e1) + " to " + formatCubeEdge(c2, e2));
 		if(c1.adjacencyAlong(e1) == c2 && c2.adjacencyAlong(e2) == c1) {
+			c1.separatedCube(c2, e1);
+			c2.separatedCube(c1, e2);
 			if (activeGame != null) {
 				activeGame.cubesSeparated(c1, e1, c2, e2);
 			}
-			c1.separatedCube(c2, e1);
-			c2.separatedCube(c1, e2);
 		}
 	}
 	
