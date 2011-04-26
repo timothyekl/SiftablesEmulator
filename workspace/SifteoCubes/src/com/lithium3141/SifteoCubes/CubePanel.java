@@ -17,6 +17,11 @@ public class CubePanel extends JPanel {
 	private Cube cube;
 	private CubeDisplayPanel displayPanel;
 	
+	private static final int SHAKE_DURATION = 20;
+	private static final int SHAKE_FUZZ = 30;
+	private double[] moves = new double[SHAKE_DURATION];
+	private int moveIndex = 0;
+	
 	public CubePanel(Cube c) {
 		super();
 		
@@ -187,18 +192,35 @@ public class CubePanel extends JPanel {
 	
 	@Override
 	public void setLocation(int x, int y) {
+		Point oldP = this.getLocation();
+		int oldX = oldP.x, oldY = oldP.y;
+		this.checkShake(oldX, oldY, x, y);
+		
 		super.setLocation(x, y);
 		
 		this.collisionDetect();
 		this.updateAdjacencies();
 	}
 	
+	public void checkShake(int x1, int y1, int x2, int y2) {
+		double distance = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+		this.moves[this.moveIndex] = distance;
+		this.moveIndex = (this.moveIndex + 1) % this.moves.length;
+		
+		double sum = 0;
+		for(int i = 0; i < this.moves.length; i++) {
+			sum += this.moves[i];
+		}
+		double avg = sum / this.moves.length;
+		if(avg > SHAKE_FUZZ) {
+			System.out.println("SHAKEN");
+			this.moves = new double[SHAKE_DURATION];
+		}
+	}
+	
 	@Override
 	public void setLocation(Point p) {
-		super.setLocation(p);
-		
-		this.collisionDetect();
-		this.updateAdjacencies();
+		this.setLocation(p.x, p.y);
 	}
 	
 	private class CubeDisplayPanel extends JPanel {
