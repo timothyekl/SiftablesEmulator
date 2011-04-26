@@ -50,6 +50,7 @@ public class Emulator {
 		registerGame(new ColorBlockGame());
 		registerGame(new AdjacencyTestGame());
 		registerGame(new ProximityTestGame());
+		registerGame(new ShakeTestGame());
 	}
 	
 	/**
@@ -150,6 +151,13 @@ public class Emulator {
 			if (activeGame != null) {
 				activeGame.cubesSeparated(c1, e1, c2, e2);
 			}
+		}
+	}
+	
+	public static void shook(Cube cube) {
+		cube.shaken();
+		if(activeGame != null) {
+			activeGame.shookCube(cube);
 		}
 	}
 	

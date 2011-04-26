@@ -213,7 +213,7 @@ public class CubePanel extends JPanel {
 		}
 		double avg = sum / this.moves.length;
 		if(avg > SHAKE_FUZZ) {
-			System.out.println("SHAKEN");
+			Emulator.shook(this.getCube());
 			this.moves = new double[SHAKE_DURATION];
 		}
 	}

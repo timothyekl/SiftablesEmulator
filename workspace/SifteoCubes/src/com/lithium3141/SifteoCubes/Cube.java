@@ -142,6 +142,13 @@ public class Cube {
 		this.adjacent[edge] = null;
 	}
 	
+	/**
+	 * Notify this cube that it was shaken.
+	 */
+	public void shaken() {
+		
+	}
+	
 	@Override
 	public String toString() {
 		return Integer.toHexString(System.identityHashCode(this));

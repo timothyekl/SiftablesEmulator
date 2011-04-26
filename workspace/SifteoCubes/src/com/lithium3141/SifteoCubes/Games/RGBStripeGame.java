@@ -45,5 +45,7 @@ public class RGBStripeGame implements Game {
 	public void addedCube(Cube cube) {}
 	@Override
 	public void removedCube(Cube cube) {}
+	@Override
+	public void shookCube(Cube cube) {}
 
 }

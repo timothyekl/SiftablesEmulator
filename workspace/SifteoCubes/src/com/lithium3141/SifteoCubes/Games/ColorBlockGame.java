@@ -57,5 +57,8 @@ public class ColorBlockGame implements Game {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public void shookCube(Cube cube) {}
 
 }

@@ -114,4 +114,7 @@ public class AdjacencyTestGame implements Game {
 		this.cubeIDs.remove(cube);
 	}
 
+	@Override
+	public void shookCube(Cube cube) {}
+
 }

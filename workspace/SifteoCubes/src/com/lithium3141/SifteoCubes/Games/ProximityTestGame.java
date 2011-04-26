@@ -102,4 +102,7 @@ public class ProximityTestGame implements Game {
 	private void removeCubeMapping(Cube cube) {
 		this.proximityMap.remove(cube);
 	}
+	
+	@Override
+	public void shookCube(Cube cube) {}
 }

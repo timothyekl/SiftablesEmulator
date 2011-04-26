@@ -51,4 +51,10 @@ public interface Game {
 	 * @param cube the Cube to remove
 	 */
 	public void removedCube(Cube cube);
+	
+	/**
+	 * Shake a Cube.
+	 * @param cube the Cube to shake
+	 */
+	public void shookCube(Cube cube);
 }

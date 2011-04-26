@@ -46,4 +46,7 @@ public class NullGame implements Game {
 
 	@Override
 	public void removedCube(Cube cube) {}
+	
+	@Override
+	public void shookCube(Cube cube) {}
 }
