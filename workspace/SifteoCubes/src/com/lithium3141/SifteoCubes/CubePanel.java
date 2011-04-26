@@ -160,8 +160,8 @@ public class CubePanel extends JPanel {
 					}
 				} else {
 					// Not aligned vertically
-					Emulator.foundSeparate(cube, cube.absoluteEdgeForRelative(Cube.EDGE_TOP), otherCube, Cube.EDGE_BOTTOM);
-					Emulator.foundSeparate(cube, cube.absoluteEdgeForRelative(Cube.EDGE_BOTTOM), otherCube, Cube.EDGE_TOP);
+					Emulator.foundSeparate(cube, cube.absoluteEdgeForRelative(Cube.EDGE_TOP), otherCube, otherCube.absoluteEdgeForRelative(Cube.EDGE_BOTTOM));
+					Emulator.foundSeparate(cube, cube.absoluteEdgeForRelative(Cube.EDGE_BOTTOM), otherCube, otherCube.absoluteEdgeForRelative(Cube.EDGE_TOP));
 				}
 				
 				// Check horizontal alignment
@@ -178,8 +178,8 @@ public class CubePanel extends JPanel {
 					}
 				} else {
 					// Not aligned horizontally
-					Emulator.foundSeparate(cube, cube.absoluteEdgeForRelative(Cube.EDGE_LEFT), otherCube, Cube.EDGE_RIGHT);
-					Emulator.foundSeparate(cube, cube.absoluteEdgeForRelative(Cube.EDGE_RIGHT), otherCube, Cube.EDGE_LEFT);
+					Emulator.foundSeparate(cube, cube.absoluteEdgeForRelative(Cube.EDGE_LEFT), otherCube, otherCube.absoluteEdgeForRelative(Cube.EDGE_RIGHT));
+					Emulator.foundSeparate(cube, cube.absoluteEdgeForRelative(Cube.EDGE_RIGHT), otherCube, otherCube.absoluteEdgeForRelative(Cube.EDGE_LEFT));
 				}
 			}
 		}
